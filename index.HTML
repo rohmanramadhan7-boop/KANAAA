@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <title>For Kana</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap&family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
   :root{--bg1:#ff9a9e;--bg2:#fad0c4}
   html,body{height:100%;margin:0}
   body {
     font-family: 'Poppins', sans-serif;
-    margin: 0;
     min-height: 100vh;
     background: linear-gradient(135deg, var(--bg1), var(--bg2));
     display: flex;
@@ -26,7 +26,6 @@
     color: rgba(255,255,255,0.85);
     font-size: 22px;
     animation: floatUp 6s linear infinite;
-    will-change: transform, opacity;
     text-shadow: 0 2px 6px rgba(0,0,0,0.12);
   }
 
@@ -46,14 +45,13 @@
     font-weight: 700;
     cursor: pointer;
     transition: transform .18s ease, box-shadow .18s ease, opacity .25s ease;
-    user-select: none;
   }
   #openBtn:hover { transform: translateY(-6px) scale(1.02); }
 
   /* Overlay */
   #overlay {
     position: fixed;
-    top:0; left:0; right:0; bottom:0;
+    inset: 0;
     background: rgba(0,0,0,0.55);
     display: none;
     justify-content: center;
@@ -65,18 +63,27 @@
   #messageBox {
     width: 100%;
     max-width: 760px;
-    max-height: 80vh; /* keep inside viewport */
-    overflow-y: auto; /* allow scrolling within box if needed */
-    background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96));
+    max-height: 80vh;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.96);
     border-radius: 16px;
     padding: 28px;
     box-shadow: 0 12px 40px rgba(10,10,20,0.18);
     color: #111;
-    -webkit-overflow-scrolling: touch;
   }
 
-  h1{font-family:'Great Vibes', cursive; font-size:56px; margin:4px 0 10px}
-  p{font-size:18px; line-height:1.7; white-space:pre-line}
+  h1{
+    font-family:'Great Vibes', cursive;
+    font-size:56px;
+    text-align:center;
+    margin-top: 0;
+  }
+
+  p{
+    font-size:18px;
+    line-height:1.7;
+    white-space: pre-line;
+  }
 
   #closeBtn {
     margin-top: 18px;
@@ -96,17 +103,18 @@
   }
 </style>
 </head>
+
 <body>
 
-<div id="openBtn" role="button" tabindex="0" aria-label="Buka pesan untuk Kana">For Kana</div>
+<div id="openBtn" role="button" tabindex="0">For Kana</div>
 
-<div id="overlay" aria-hidden="true">
-  <div id="messageBox" role="dialog" aria-modal="true" aria-label="Pesan untuk Kana">
+<div id="overlay">
+  <div id="messageBox">
     <h1>Untuk Kana</h1>
     <p id="text">Halo kana, aku kangen sama kamu pake bangetttt lho.
 Maafin aku yah… maaf banget kalau aku selalu bikin kamu emosi.
 maaf yah, kalo aku cm bisa kayak gini. aku masih pengen bareng sama kamu jadi maafin aku yahh.
-aku cm pengen buat kamu seneng, biar respon kamu sama kaya pas waktu abis makan seafood bareng
+aku cm pengen buat kamu seneng, biar respon kamu sama kaya pas waktu abis makan seafood bareng.
 aku seneng bangett kalo respon kamu kayak gitu, tapi aku juga seneng klo pun direspon seadanya.
 tapi kalo kamu gk ngerespon tolong kasih tau aku juga, biar aku tau kamu lagi apa biar aku gk ganggu.
 aku harap setelah pesan ini aku boleh lagi gk nanyain kabar kamu tiap hari, nanyain kamu udah makan apa belum,
@@ -115,7 +123,7 @@ mungkin sekarang permintaan maafku sebatas tulisan, kalo kita ketemuan nanti aku
 maaf yahh sekali lagi. jadi aku boleh kayak dlu lagi gk???🥹🥹.
 maaf yahh aku kangennnnnn bangettttt.
 meskipun gk chatan, aku masih mikirin kamu meskipun aku tau kamu mungkin gk mikirin aku.
-jadi aku ngehargain respon kamu kalo kamu gk mau aku kayak dlu lagi, soalnya cm aku doang yang ngerasa gitu
+jadi aku ngehargain respon kamu kalo kamu gk mau aku kayak dlu lagi, soalnya cm aku doang yang ngerasa gitu.
 aku takut ganggu banget ke kamu.
 kan kamu sekarang sibuk banget kan, jadi aku takut nge ganggu ke kamu,
 yang mungkin nanti bisa bikin mood kamu jadi makin emosi.
@@ -123,74 +131,30 @@ tapi setidaknya kamu maafin aku yahh, meskipun gk mau kayak dlu.
 aku gk mau aku jadi buruk di mata kamu 🥹🥹🥹.
 maafin aku yahhh</p>
 
-    <div style="display:flex;gap:10px;justify-content:flex-end;align-items:center;margin-top:12px">
-      <button id="closeBtn">Tutup</button>
-    </div>
+    <button id="closeBtn">Tutup</button>
   </div>
 </div>
 
-<!-- Single audio element to be played on user click -->
-<audio id="bgMusic" src="musikku.mp3" preload="auto" loop></audio>
-
-<script>
-// create floating hearts
-for (let i = 0; i < 20; i++){
-  const el = document.createElement('div');
-  el.className = 'heart';
-  el.textContent = '❤';
-  el.style.left = Math.random() * 100 + 'vw';
-  el.style.top = 80 + Math.random() * 20 + 'vh';
-  el.style.fontSize = (12 + Math.random()*26) + 'px';
-  el.style.animationDuration = (5 + Math.random()*6) + 's';
-  document.body.appendChild(el);
-}
-
-const openBtn = document.getElementById('openBtn');
-const overlay = document.getElementById('overlay');
-const messageBox = document.getElementById('messageBox');
-const closeBtn = document.getElementById('closeBtn');
-const bgMusic = document.getElementById('bgMusic');
-
-function openMessage() {
-  document.getElementById("bgm").play();
-  // show overlay and message
-  overlay.style.display = 'flex';
-  overlay.setAttribute('aria-hidden','false');
-  // hide open button
-  openBtn.style.opacity = '0';
-  openBtn.style.pointerEvents = 'none';
-
-  // attempt to play music (user gesture)
-  if (bgMusic){ bgMusic.volume = 0.65; bgMusic.play().catch(e => console.log('play failed', e)); }
-
-  // ensure message is fully visible (no type effect so text shows at once)
-  // scroll to top in case of overflow
-  messageBox.scrollTop = 0;
-}
-
-function closeMessage(){
-  overlay.style.display = 'none';
-  overlay.setAttribute('aria-hidden','true');
-  openBtn.style.opacity = '1';
-  openBtn.style.pointerEvents = 'auto';
-  // pause music
-  if (bgMusic){ bgMusic.pause(); bgMusic.currentTime = 0; }
-}
-
-openBtn.addEventListener('click', openMessage);
-openBtn.addEventListener('keydown', (e)=>{ if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openMessage(); } });
-closeBtn.addEventListener('click', closeMessage);
-
-// make sure messageBox fits in one frame: adjust font-size on very small screens
-(function adjustForSmallScreens(){
-  if (window.innerHeight < 600){
-    document.getElementById('text').style.fontSize = '15px';
-  }
-})();
-
-</script>
-
+<!-- Background music -->
 <audio id="bgm" src="musikku.mp3" preload="auto" loop></audio>
 
-</body>
-</html>
+<script>
+// Floating hearts
+for (let i = 0; i < 20; i++){
+  const h = document.createElement('div');
+  h.className = 'heart';
+  h.textContent = '❤';
+  h.style.left = Math.random() * 100 + 'vw';
+  h.style.top = 80 + Math.random() * 20 + 'vh';
+  h.style.fontSize = (12 + Math.random()*26) + 'px';
+  h.style.animationDuration = (5 + Math.random()*6) + 's';
+  document.body.appendChild(h);
+}
+
+const openBtn  = document.getElementById('openBtn');
+const overlay  = document.getElementById('overlay');
+const closeBtn = document.getElementById('closeBtn');
+const bgm      = document.getElementById('bgm');
+
+function openMessage(){
+  overlay.style.
